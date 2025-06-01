@@ -1,0 +1,32 @@
+// This report aims at showing good practices on how to retrieve data with SQL using practical examples on the data
+-- Returns first 100 rows from tutorial.us_flights
+  SELECT * FROM tutorial.us_flights LIMIT 100
+
+-- We would like to know more about the key summary statistics of the data contained in the table 
+-- by retrieving the 
+-- number of distinct aircrafts, 
+-- number of overall flights as well as a few statistics about flights arrival delays.
+
+SELECT
+  COUNT(DISTINCT unique_carrier) AS nb_distinct_aircrafts,
+  COUNT(flight_num) AS nb_flights,
+  AVG(arr_delay) AS avg_arrival_delay,
+  MAX(arr_delay) AS max_arrival_delay,
+  MIN(arr_delay) AS min_arrival_delay
+FROM tutorial.us_flights
+
+-- We want to obtain the distinct origin airport's code attached and number of flights.
+SELECT
+  origin,
+  COUNT(flight_num)
+FROM tutorial.us_flights
+GROUP BY origin
+
+-- We want to obtain the distinct origin airport's code attached and number of flights in '2015-01-10'
+SELECT
+  origin,
+  COUNT(flight_num)
+FROM tutorial.us_flights
+WHERE flight_date = '2015-01-10'
+GROUP BY 1
+ORDER BY 2 DESC
